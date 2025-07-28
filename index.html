@@ -5,25 +5,58 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>SH League</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
-    .navbar { background: #333; color: white; padding: 10px; }
-    .navbar a { color: white; margin: 0 10px; text-decoration: none; }
-    .hero { text-align: center; padding: 50px; background: #f4f4f4; }
-    .books-section { padding: 20px; }
-    .book-card { border: 1px solid #ddd; padding: 10px; margin: 10px; display: inline-block; vertical-align: top; width: 200px; }
-    .book-card img { max-width: 100%; }
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; color: black; }
+    .navbar { background: white; color: black; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); border-bottom: 2px solid #c13773; }
+    .navbar .logo-container { display: flex; align-items: center; gap: 10px; }
+    .navbar .logo-img { height: 40px; width: auto; }
+    .navbar .logo-text { color: #bd0919; font-size: 24px; font-weight: bold; text-decoration: none; }
+    .navbar .nav-links { display: flex; align-items: center; gap: 15px; }
+    .navbar a { color: #c13773; margin: 0 10px; text-decoration: none; transition: color 0.3s; }
+    .navbar a:hover { color: #bd0919; }
+    .navbar select { background: white; color: black; border: 1px solid #e289c1; padding: 5px; border-radius: 4px; }
+    .hero { 
+      text-align: center; 
+      padding: 100px 50px; 
+      background: url('https://res.cloudinary.com/deijgnxtr/image/upload/v1753680918/blurred-bookshelf-many-old-books-in-a-book-shop-or-library-photo_hcvjd1.webp');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: white;
+      position: relative;
+    }
+    .hero h1 { color: white; margin-bottom: 10px; font-size: 3em; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+    .hero p { color: white; font-size: 1.2em; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); }
+    .books-section { padding: 20px; background: #c13773; }
+    .books-section h2 { color: white; border-bottom: 2px solid white; padding-bottom: 10px; }
+    .book-card { border: 2px solid white; padding: 15px; margin: 10px; display: inline-block; vertical-align: top; width: 200px; border-radius: 8px; background: white; box-shadow: 0 4px 8px rgba(0,0,0,0.1); transition: transform 0.3s; }
+    .book-card:hover { transform: translateY(-5px); border-color: #e289c1; }
+    .book-card img { max-width: 100%; border-radius: 4px; }
+    .book-card h3 { color: #bd0919; margin: 10px 0 5px 0; }
+    .book-card p { color: black; margin: 5px 0; }
+    .book-card button { background: linear-gradient(135deg, #c13773, #bd0919); color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; transition: background 0.3s; }
+    .book-card button:hover { background: linear-gradient(135deg, #bd0919, #c13773); }
     .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); }
-    .modal-content { background: white; margin: 15% auto; padding: 20px; width: 80%; max-width: 500px; }
-    .close { float: right; cursor: pointer; }
-    .error { color: red; display: none; }
+    .modal-content { background: white; margin: 15% auto; padding: 20px; width: 80%; max-width: 500px; border-radius: 8px; border: 2px solid #c13773; }
+    .modal-content h2 { color: #bd0919; border-bottom: 2px solid #e289c1; padding-bottom: 10px; }
+    .modal-content button { background: linear-gradient(135deg, #c13773, #bd0919); color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; margin: 5px; }
+    .modal-content button:hover { background: linear-gradient(135deg, #bd0919, #c13773); }
+    .modal-content input, .modal-content select { border: 1px solid #e289c1; padding: 8px; margin: 5px 0; width: calc(100% - 16px); border-radius: 4px; }
+    .modal-content input:focus, .modal-content select:focus { outline: none; border-color: #c13773; }
+    .close { float: right; cursor: pointer; color: #bd0919; font-size: 24px; font-weight: bold; }
+    .close:hover { color: #c13773; }
+    .error { color: #bd0919; display: none; background: #ffe6e6; padding: 10px; border-radius: 4px; border: 1px solid #bd0919; }
+    .admin-section h3 { color: #bd0919; }
+    label { color: black; font-weight: bold; }
+    .books-section label { color: white; font-weight: bold; }
   </style>
 </head>
 <body>
   <nav class="navbar">
-    <div>
-      <a href="#" class="logo">SH League</a>
+    <div class="logo-container">
+      <img src="https://res.cloudinary.com/deijgnxtr/image/upload/v1753680556/logo_imrd5c.png" alt="SH League" class="logo-img">
+      <a href="#" class="logo-text">SH League</a>
     </div>
-    <div>
+    <div class="nav-links">
       <select id="category-filter">
         <option value="all">All Categories</option>
       </select>
@@ -82,7 +115,7 @@
       <span class="close" onclick="closeModal('cart-modal')">&times;</span>
       <h2>Shopping Cart</h2>
       <div id="cart-items"></div>
-      <p>Total: $<span id="cart-total">0.00</span></p>
+      <p>Total: ₹<span id="cart-total">0.00</span></p>
       <button onclick="openModal('checkout-modal')">Proceed to Checkout</button>
     </div>
   </div>
@@ -106,7 +139,7 @@
         <option value="paypal">PayPal</option>
         <option value="cod">Cash on Delivery</option>
       </select>
-      <p>Total: $<span id="checkout-total">0.00</span></p>
+      <p>Total: ₹<span id="checkout-total">0.00</span></p>
       <button onclick="completeOrder()">Complete Order</button>
     </div>
   </div>
@@ -135,7 +168,7 @@
           <img src="${book.image}" alt="${book.title}">
           <h3>${book.title}</h3>
           <p>by ${book.author}</p>
-          <p>$${parseFloat(book.price).toFixed(2)}</p>
+          <p>₹${parseFloat(book.price).toFixed(2)}</p>
           <p>${book.description}</p>
           <button onclick="addToCart('${book.id}')">Add to Cart</button>
         `;
@@ -201,7 +234,7 @@
       cart.forEach(book => {
         total += parseFloat(book.price);
         const div = document.createElement('div');
-        div.textContent = `${book.title} - $${parseFloat(book.price).toFixed(2)}`;
+        div.textContent = `${book.title} - ₹${parseFloat(book.price).toFixed(2)}`;
         cartItems.appendChild(div);
       });
       cartCount.textContent = cart.length;
@@ -243,7 +276,7 @@
 
       const [first, last, email, phone, address, city, postal, payment] = values;
       const total = cart.reduce((sum, b) => sum + parseFloat(b.price), 0).toFixed(2);
-      const items = cart.map(b => `${b.title} ($${b.price})`).join(', ');
+      const items = cart.map(b => `${b.title} (₹${b.price})`).join(', ');
 
       const order = {
         order_id: Date.now().toString(),
